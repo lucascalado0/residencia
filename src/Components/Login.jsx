@@ -1,8 +1,9 @@
 import React from 'react'
+import {Link} from "react-router-dom"
 
 
 
-const Login = () => {
+function Login() {
     return (
         <div className="container">
             <form className="login-form">
@@ -28,16 +29,9 @@ const Login = () => {
                 </div>
                 <button type="submit">Entrar</button>
             </form>
-            <div>
-                <a href="Cadastro_u.jsx">Cadastre-se</a>
-            </div>
-
+            <Link to={'/cadastro_usuario'}>Cadastre-se</Link>
         </div>
-
-
-
-
-
+        
     )
 
 }
