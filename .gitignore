@@ -23,6 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Python
+*.pyc
+*/__pycache__
+
+
 # venv do python
 /backend/residencia
 
