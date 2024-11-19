@@ -5,12 +5,12 @@ import { Link } from "react-router-dom"
 function Login() {
     return (
         <div className="container">
-            <div className='item1'></div>
-            <div className='item2'>
+            <div className='item1-login'></div>
+            <div className='item2-login'>
                 <form action="" method="get" className='formulario'>
                     <label id='name' htmlFor="name">Nome de Usuário: </label>
                     <input type="text" placeholder='Insira seu usuario' required/>
-                    <label htmlFor="password">Senha: </label>
+                    <label id='senha' htmlFor="password">Senha: </label>
                     <input id='password' type="password" placeholder='Insira sua senha' required/>
                     <button type="submit">LOGIN</button>
                 </form>

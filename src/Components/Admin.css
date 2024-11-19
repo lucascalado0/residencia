@@ -1,0 +1,180 @@
+.container {
+  display: flex;
+  background-color: #EDF0F7;
+}
+
+.icons-admin {
+  display: flex;
+  gap: 0px; 
+  position: absolute;
+  right: 80px; 
+  top: -40px; 
+}
+
+.icon-btn-admin {
+  background-color: #FFFFFF;
+  color: #01184A;
+  border: none;
+  border-radius: 90%; 
+  padding: 16px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.icon-btn-admin:hover {
+  background-color: #01184A;
+  color: #f0f0f0;
+}
+
+.item1-admin {
+  margin: 0;
+  border: 1px solid black;
+  height: 110vh;
+  width: 100px;
+  background-color: #01184A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+  justify-content: flex-start;
+  padding-top: 20px;     
+}
+
+.item2-admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: #ffffff;
+  margin-top: 100px;
+  margin-left: 30px;
+  height: 780px;
+  padding: 50px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 87%;
+  font-size: 20px;
+  color: #01184A;
+}
+  
+  .barra-status {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+
+  .barra-pesquisa {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .barra-pesquisa input {
+    width: 500px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+    font-weight: bolder;
+  }
+  
+  .status-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    white-space: nowrap;
+    text-align: center;
+    letter-spacing: 0.6px;
+  }
+  
+ 
+  .status-btn.ativo {
+    background-color: #003366;
+    color: white;
+    margin: 0 40px 0 0;
+  }
+  
+ 
+  .status-btn:not(.ativo) {
+    background-color: white;
+    color: black;
+    margin: 0 40px 0 0;
+  }
+  
+ 
+  .status-btn:not(.ativo):hover {
+    background-color: #003366;
+    color: white;
+  }
+  
+  .linha-horizontal {
+    border: 0;
+    border-top: 2px solid #333;
+    margin: 20px 0;
+    width: 100%;
+  }
+
+  .tasks-ativas-title {
+    font-size: 24px; 
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .detalhes-task {
+    color: #7F7F7F;
+    font-size: 1em;
+    margin-bottom: 40px;
+  }
+  
+  .comentarios-admin {
+    padding: 0 20px;
+    margin-bottom: 40px;
+    border: 1px solid black;
+    border-radius: 8px; 
+    display: flex;
+    align-items: center;
+  }
+  
+  .comentario-titulo-admin {
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 15px;
+  }
+  
+  .comentario-texto-admin {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    color: #555555c9;
+  }
+
+  .h3-admin {
+    color: black;
+  }
+  
+  .circulo-admin {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #01184A;
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  }
