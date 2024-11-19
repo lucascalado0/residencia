@@ -1,0 +1,122 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f9;
+}
+
+.container {
+  display: flex;
+}
+
+.item1-cadastro {
+  margin: 0;
+  border: 1px solid black;
+  height: 97.7vh;
+  width: 100px;
+  background-color: #01184A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 20px;
+}
+
+.item2-cadastro {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  margin-top: 80px;
+  margin-left: 50px;
+  height: 80vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  font-size: 20px;
+  color: #01184A;
+}
+
+input {
+  display: block;
+  font-size: 16px;
+  border: 3px solid #01184A;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 25px;
+  width: 120%;
+  padding: 10px;
+}
+
+#nome, #mail, #senha, #funcao {
+  font-weight: bolder;
+}
+
+
+.select_funcao {
+  width: 126%;
+  padding: 10px;
+  font-size: 16px;
+  border: 3px solid #01184A;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #01184A;
+  transition: border-color 0.3s ease;
+  font-weight: bolder;
+}
+
+
+.select_funcao:focus {
+  border-color: #003366;
+  outline: none;
+}
+
+
+.select_funcao option {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: #01184A;
+  border: none;
+  font-weight: bold;
+}
+
+
+.select_funcao option:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+
+.select_funcao option:focus {
+  background-color: #003366;
+  color: white;
+}
+
+button {
+  width: 80%;
+  height: 50px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #01184A;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 70px;
+  margin-left: 60px;
+}
+
+.link_cadastro {
+  margin-left: 50px ;
+  margin-top: 50px;
+  text-decoration: none;
+  color: #01184a;
+}
+
+.link_cadastro:hover {
+  color: #003366;
+}
