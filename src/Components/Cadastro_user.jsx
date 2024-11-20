@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import "./Cadastro_user.css";
+import "./mensagem_erro_sucesso.css";
 
 function Cadastro() {
     const [message, setMessage] = useState('');

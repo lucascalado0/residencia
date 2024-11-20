@@ -10,6 +10,8 @@ from app import app
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
 
+usuario_teste = {"username": "primeiro@org.com", "password": "123456"}
+
 # Configurar MongoDB
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client.residencia
@@ -64,10 +66,19 @@ def login():
     password = data.get('password')
 
     # Buscar o usuário no banco de dados
-    user = db.users.find_one({"username": username})
+    # user = db.users.find_one({"username": username})
 
+    if username == usuario_teste["username"]:
+        if password == usuario_teste["password"]:
+            return jsonify({"status": "success", "message": "Sucesso! Usuário logado.", "object": usuario_teste}), 200            
+        else:
+            return jsonify({"status": "error", "message": "Nome de usuário ou senha incorretos"}), 401
+    return jsonify({"status": "error", "message": "Nome de usuário ou senhaaa incorretos"}), 401
+    
+    """
     # Verifica se o usuário existe e a senha está correta
     if user and bcrypt.check_password_hash(user['password'], password):
         return jsonify({"status": "success", "message": "Login realizado com sucesso"}), 200
     else:
         return jsonify({"status": "error", "message": "Nome de usuário ou senha incorretos"}), 401
+    """
