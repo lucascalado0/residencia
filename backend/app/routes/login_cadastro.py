@@ -39,7 +39,7 @@ def cadastro():
     # Verifica se a senha tem no mínimo 6 caracteres 
     if len(password) < 6: 
         return jsonify({"status": "error", "message": "A senha deve ter no mínimo 6 caracteres"}), 400 
-
+    """
     # Verifica se o usuário já existe
     if db.users.find_one({"username": username}):
         return jsonify({"status": "error", "message": "Usuário já existe"}), 400
@@ -54,7 +54,7 @@ def cadastro():
         "password": hashed_password,
         "funcao": funcao
     })
-
+    """
     return jsonify({"status": "success", "message": "Usuário cadastrado com sucesso"}), 201
 
 @login_cadastro.route('/login', methods=['POST'])

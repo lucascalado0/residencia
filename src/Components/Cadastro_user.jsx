@@ -1,7 +1,12 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import "./Cadastro_user.css";
 
 function Cadastro() {
+    const [message, setMessage] = useState('');
+    const [isError, setIsError] = useState(false); 
+    const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -21,12 +26,16 @@ function Cadastro() {
         });
 
         const data = await response.json();
-        console.log(data);
 
         if (data.status === 'success') {
-            console.log("Usuário cadastrado com sucesso!");
+            setIsError(false);
+            setMessage('Usuário cadastrado com sucesso!');
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
         } else {
-            console.log("Erro ao cadastrar usuário:", data.message);
+            setMessage(`Erro ao cadastrar usuário: ${data.message}`);
+            setIsError(true);
         }
     };
 
@@ -34,13 +43,14 @@ function Cadastro() {
         <div className="container_cadastro">
             <div className='item1_cadastro'>1</div>
             <div className='item2_cadastro'>
+            {message && <div className={`feedback ${isError ? 'error' : ''}`}>{message}</div>}
                 <form onSubmit={handleSubmit} className='formulario'>
                     <label htmlFor="name" id='user'>Nome de Usuário: </label>
-                    <input type="text" name="username" placeholder='Insira seu usuario' required/>
+                    <input type="text" name="username" placeholder='Insira seu usuario' required />
                     <label id='mail' htmlFor="email">Email: </label>
-                    <input type="email" name="email" placeholder='Insira seu email' required/>
+                    <input type="email" name="email" placeholder='Insira seu email' required />
                     <label id='senha' htmlFor="password">Senha: </label>
-                    <input type="password" name="password" placeholder='Insira sua senha' required/>
+                    <input type="password" name="password" placeholder='Insira sua senha' required />
                     <label htmlFor="funcao">Função: </label>
                     <select name="funcao" id="function" className='select_funcao'>
                         <option value="funcao1">FUNÇÃO 1</option>
