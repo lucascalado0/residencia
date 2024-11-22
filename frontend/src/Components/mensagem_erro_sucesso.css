@@ -1,0 +1,11 @@
+.feedback {
+    padding: 10px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #38b13c;
+}
+
+.feedback.error {
+    background-color: #cf362b;
+}
