@@ -1,10 +1,10 @@
-from app import app
 import os
 import uuid
 from dotenv import load_dotenv
 from flask import Blueprint, Flask, jsonify, request
 from thehive4py import TheHiveApi
 from thehive4py.types.observable import InputObservable
+from thehive4py.query import Eq
 
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -16,9 +16,10 @@ hive = TheHiveApi(
     password=os.getenv("THEHIVE_PASSWORD")
 )
 
+app = Flask(__name__)
 routes = Blueprint('routes', __name__)
 
-@app.route('/create_alert', methods=['POST'])
+@routes.route('/create_alert', methods=['POST'])
 def create_alert():
     data = request.get_json()
     alert_type = data.get("type", "simple")
@@ -37,7 +38,7 @@ def create_alert():
     }
 
     # Enviar o alerta usando a API do TheHive
-    output_alert = hive.alert.create(alert=input_alert)
+    output_alert = hive.create_alert(input_alert)
 
     # Verificar se o alerta foi criado com sucesso
     if output_alert.status_code == 201:
@@ -45,7 +46,7 @@ def create_alert():
     else:
         return jsonify({"status": "error", "message": output_alert.json()}), output_alert.status_code
 
-@app.route('/create_observable', methods=['POST'])
+@routes.route('/create_observable', methods=['POST'])
 def create_observable():
     data = request.get_json()
     alert_id = data.get("alert_id")
@@ -54,15 +55,40 @@ def create_observable():
     # Adicionar observáveis ao alerta
     responses = []
     for input_observable in observables:
-        response = hive.alert.create_observable(
-            alert_id=alert_id, observable=input_observable
-        )
+        response = hive.create_alert_observable(alert_id=alert_id, observable=input_observable)
         responses.append(response.json())
 
     return jsonify({"status": "success", "observables": responses})
 
+def get_observables_of_alert(alert_id):
+    response = hive.alert.find_observables(alert_id)
+    if isinstance(response, list): 
+        return response 
+    else: 
+        return []
 
+@routes.route('/alerts', methods=['GET'])
+def get_alerts():
+    # Obter todos os alertas
+    alerts = hive.alert.find()
 
-@app.route('/') 
+    # Verificar se a solicitação retornou resultados
+    if isinstance(alerts, list):
+        for alert in alerts:
+            alert_id = alert["_id"]
+            observables = get_observables_of_alert(alert_id)
+            alert["observables"] = observables
+
+        return jsonify({"status": "success", "alerts": alerts}), 200
+    else:
+        return jsonify({"status": "error", "message": "Erro ao buscar alertas"}), 500
+
+@routes.route('/')
 def home():
-    return "Bem-vindo à Página Inicial do Flask!" 
+    return "Bem-vindo à Página Inicial do Flask!"
+
+# Registrar o blueprint
+app.register_blueprint(routes)
+
+if __name__ == '__main__':
+    app.run(debug=True)
