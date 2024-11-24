@@ -174,6 +174,44 @@ def analyze_observable():
         print(f"Erro ao analisar o observable: {e}")
         return jsonify({"status": "error", "message": "Erro ao analisar o observable"}), 500
 
+@routes.route('/create_task', methods=['POST'])
+def create_task():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    data = request.get_json()
+    case_id = data.get("case_id")
+    task_title = data.get("title", "Nova Tarefa")
+    task_description = data.get("description", "Descrição da tarefa")
+
+    # Criar um nova tarefa
+    new_task = {
+        "title": task_title,
+        "description": task_description
+    }
+
+    response = hive.case.create_task(case_id, new_task)
+
+    # Verificar se a tarefa foi criada com sucesso
+    if response.status_code == 201:
+        return jsonify({"status": "success", "task_id": response.json()["_id"]}), 201
+    else:
+        return jsonify({"status": "error", "message": response.json()}), response.status_code
+
+@routes.route('/tasks', methods=['GET'])
+def get_tasks():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    # Obter todas as tarefas
+    tasks = hive.task.find()
+
+    # Verificar se a solicitação retornou resultados
+    if isinstance(tasks, list):
+        return jsonify({"status": "success", "tasks": tasks}), 200
+    else:
+        return jsonify({"status": "error", "message": "Erro ao buscar tarefas"}), 500
+
 @routes.route('/')
 def home():
     return "Bem-vindo à Página Inicial do Flask!"
