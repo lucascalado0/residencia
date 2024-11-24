@@ -56,6 +56,22 @@ def create_alert():
     else:
         return jsonify({"status": "error", "message": output_alert.json()}), output_alert.status_code
 
+@routes.route('/update_alert', methods=['PUT'])
+def update_alert():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    data = request.get_json()
+    alert_id = data.get("alert_id")
+    updated_alert = data.get("updated_alert")
+
+    response = hive.alert.update(alert_id, updated_alert)
+
+    if response.status_code == 200:
+        return jsonify({"status": "success", "alert_id": response.json()["_id"]}), 200
+    else:
+        return jsonify({"status": "error", "message": response.json()}), response.status_code
+
 @routes.route('/create_observable', methods=['POST'])
 def create_observable():
     if not check_hive_connection():
@@ -72,6 +88,23 @@ def create_observable():
         responses.append(response.json())
 
     return jsonify({"status": "success", "observables": responses})
+
+@routes.route('/update_observable', methods=['PUT'])
+def update_observable():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    data = request.get_json()
+    alert_id = data.get("alert_id")
+    observable_id = data.get("observable_id")
+    updated_observable = data.get("updated_observable")
+
+    response = hive.observable.update(observable_id, updated_observable)
+
+    if response.status_code == 200:
+        return jsonify({"status": "success", "observable_id": response.json()["_id"]}), 200
+    else:
+        return jsonify({"status": "error", "message": response.json()}), response.status_code
 
 def get_observables_of_alert(alert_id):
     response = hive.alert.find_observables(alert_id)
@@ -138,6 +171,22 @@ def create_case():
     else:
         return jsonify({"status": "error", "message": response.json()}), response.status_code
 
+@routes.route('/update_case', methods=['PUT'])
+def update_case():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    data = request.get_json()
+    case_id = data.get("case_id")
+    updated_case = data.get("updated_case")
+
+    response = hive.case.update(case_id, updated_case)
+
+    if response.status_code == 200:
+        return jsonify({"status": "success", "case_id": response.json()["_id"]}), 200
+    else:
+        return jsonify({"status": "error", "message": response.json()}), response.status_code
+
 @routes.route('/cases', methods=['GET'])
 def get_cases():
     if not check_hive_connection():
@@ -184,7 +233,7 @@ def create_task():
     task_title = data.get("title", "Nova Tarefa")
     task_description = data.get("description", "Descrição da tarefa")
 
-    # Criar um nova tarefa
+    # Criar uma nova tarefa
     new_task = {
         "title": task_title,
         "description": task_description
@@ -195,6 +244,22 @@ def create_task():
     # Verificar se a tarefa foi criada com sucesso
     if response.status_code == 201:
         return jsonify({"status": "success", "task_id": response.json()["_id"]}), 201
+    else:
+        return jsonify({"status": "error", "message": response.json()}), response.status_code
+
+@routes.route('/update_task', methods=['PUT'])
+def update_task():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    data = request.get_json()
+    task_id = data.get("task_id")
+    updated_task = data.get("updated_task")
+
+    response = hive.task.update(task_id, updated_task)
+
+    if response.status_code == 200:
+        return jsonify({"status": "success", "task_id": response.json()["_id"]}), 200
     else:
         return jsonify({"status": "error", "message": response.json()}), response.status_code
 
@@ -211,6 +276,30 @@ def get_tasks():
         return jsonify({"status": "success", "tasks": tasks}), 200
     else:
         return jsonify({"status": "error", "message": "Erro ao buscar tarefas"}), 500
+
+
+@routes.route('/update_task_status', methods=['PUT'])
+def update_task_status():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    data = request.get_json()
+    task_id = data.get("task_id")
+    status = data.get("status")
+
+    if status not in ["Done", "Required"]:
+        return jsonify({"status": "error", "message": "Status inválido"}), 400
+
+    updated_task = {
+        "status": status
+    }
+
+    response = hive.task.update(task_id, updated_task)
+
+    if response.status_code == 200:
+        return jsonify({"status": "success", "task_id": response.json()["_id"]}), 200
+    else:
+        return jsonify({"status": "error", "message": response.json()}), response.status_code
 
 @routes.route('/')
 def home():
