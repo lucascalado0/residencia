@@ -152,6 +152,28 @@ def get_cases():
     else:
         return jsonify({"status": "error", "message": "Erro ao buscar casos"}), 500
 
+@routes.route('/analyze_observable', methods=['POST'])
+def analyze_observable():
+    if not check_hive_connection():
+        return jsonify({"status": "error", "message": "TheHive está fora de alcance"}), 503
+
+    data = request.get_json()
+    observable = data.get("observable")
+
+    if not observable:
+        return jsonify({"status": "error", "message": "Observable não fornecido"}), 400
+
+    # Usar o observable para ser analisado pelo analyzer MISP_2_1
+    try:
+        response = hive.analyzer.run(analyzer="MISP_2_1", observable_data=observable, tlp=2)
+        if response.status_code == 200:
+            return jsonify({"status": "success", "analysis": response.json()}), 200
+        else:
+            return jsonify({"status": "error", "message": response.json()}), response.status_code
+    except Exception as e:
+        print(f"Erro ao analisar o observable: {e}")
+        return jsonify({"status": "error", "message": "Erro ao analisar o observable"}), 500
+
 @routes.route('/')
 def home():
     return "Bem-vindo à Página Inicial do Flask!"
