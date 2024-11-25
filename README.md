@@ -3,9 +3,11 @@
 ### Equipe 3
 
 ## Instalação
-Para utilizar o sistema, é necessário inicial o backend em python e o frontent em React
+Para utilizar o sistema, é necessário iniciar o backend em python e o frontent em React
 
 ### Iniciando o Backend
+Este projeto utiliza Python como linguagem principal para a construção do back-end.
+
 Antes de iniciar o backend, é preciso ter uma instância do TheHive, Cortex e MISP rodando.
 Após se certificar de que os 3 serviços estão prontos, é preciso criar o arquivo `.env` dentro da pasta `backend`.
 
@@ -28,3 +30,10 @@ Feito isso, é hora de instalar as dependências.
 * Tudo certo, você verá que o backend já está rodando no localhost, porta 5000
 
 ### Iniciando o Frontend
+Este projeto utiliza React.js como biblioteca principal para construção da interface de usuário, biblioteca JavaScript amplamente utilizada para criar interfaces dinâmicas, escaláveis e baseadas em componentes reutilizáveis.
+
+Para iniciar o frontend, é necessário realizara a seguinte tarefa: 
+* Abrir terminal
+* Dentro do terminal observe a pasta em que o mesmo se encontra e localize o caminho para o diretório frontend
+* Digite o comando 'cd frontend' no terminal para acessar o diretório
+* Por fim, com o terminal no diretório frontend, digite o comando 'npm run dev' 
