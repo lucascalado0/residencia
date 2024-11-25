@@ -30,7 +30,7 @@ dist-ssr
 
 
 # venv do python
-/backend/residencia
+/backend/venv
 
 # Variaveis do ambiente
 /backend/.env

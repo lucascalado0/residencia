@@ -13,7 +13,7 @@ usuario_teste = {"username": "primeiro@org.com", "password": "123456"}
 
 # Configurar MongoDB
 client = MongoClient(os.getenv("MONGO_URI"))
-db = client.residencia
+db = client['thehive']
 
 login_cadastro = Blueprint('login_cadastro', __name__)
 
@@ -37,22 +37,22 @@ def cadastro():
     # Verifica se a senha tem no mínimo 6 caracteres 
     if len(password) < 6: 
         return jsonify({"status": "error", "message": "A senha deve ter no mínimo 6 caracteres"}), 400 
-    """
+    
     # Verifica se o usuário já existe
-    if db.users.find_one({"username": username}):
+    if db.usuarios.find_one({"username": username}):
         return jsonify({"status": "error", "message": "Usuário já existe"}), 400
 
     # Criptografar a senha
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     # Inserir o novo usuário no banco de dados
-    db.users.insert_one({
+    db.usuarios.insert_one({
         "username": username,
         "email": email,
         "password": hashed_password,
         "funcao": funcao
     })
-    """
+
     return jsonify({"status": "success", "message": "Usuário cadastrado com sucesso"}), 201
 
 @login_cadastro.route('/login', methods=['POST'])
@@ -62,19 +62,21 @@ def login():
     password = data.get('password')
 
     # Buscar o usuário no banco de dados
-    # user = db.users.find_one({"username": username})
-
+    user = db.usuarios.find_one({"username": username})
+    print(user)
+    """
     if username == usuario_teste["username"]:
         if password == usuario_teste["password"]:
             return jsonify({"status": "success", "message": "Sucesso! Usuário logado.", "object": usuario_teste}), 200            
         else:
             return jsonify({"status": "error", "message": "Nome de usuário ou senha incorretos"}), 401
     return jsonify({"status": "error", "message": "Nome de usuário ou senhaaa incorretos"}), 401
-    
     """
+
     # Verifica se o usuário existe e a senha está correta
     if user and bcrypt.check_password_hash(user['password'], password):
         return jsonify({"status": "success", "message": "Login realizado com sucesso"}), 200
     else:
         return jsonify({"status": "error", "message": "Nome de usuário ou senha incorretos"}), 401
-    """
+    
+
