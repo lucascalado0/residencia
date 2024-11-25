@@ -4,8 +4,7 @@ import uuid
 from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
 from dotenv import load_dotenv
-from flask_bcrypt import Bcrypt
-from app import app
+from app import bcrypt
 
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -15,9 +14,6 @@ usuario_teste = {"username": "primeiro@org.com", "password": "123456"}
 # Configurar MongoDB
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client.residencia
-
-# Inicializar Bcrypt
-bcrypt = Bcrypt(app)
 
 login_cadastro = Blueprint('login_cadastro', __name__)
 

@@ -26,6 +26,7 @@ dist-ssr
 # Python
 *.pyc
 */__pycache__
+/backend/teste.py
 
 
 # venv do python
