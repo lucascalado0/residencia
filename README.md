@@ -25,6 +25,11 @@ Feito isso, é hora de instalar as dependências.
 * Confirmando de que está no diretório correto, escreva o seguinte comando e pressione Enter:
 
 * `pip install -r requiremtents.txt`
+* * Se não for possível instalar as bibliotecas, talvez seja necessário iniciar um venv python. Para isso, siga os passos abaixo:
+* * - Ainda no diretório raiz do backend, escreva o seguinte comando: `python -m venv venv`
+* * - Com isso, você verá que uma pasta `venv`será criada dentro de `/backend/`.
+* * - - Se você estiver no Linux rode o seguinte comando: `source venv/bin/activate` e tente usar o `pip install...` acima novamente.
+* * - - Se estiver no windows use `./venv/Scripts/activate` e tente usar o `pip install...` acima novamente.
 * Após todas as bibliotecas instaladas, rode o seguinte comando:
 * `python run.py`
 * Tudo certo, você verá que o backend já está rodando no localhost, porta 5000
