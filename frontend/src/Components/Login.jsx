@@ -13,7 +13,7 @@ function Login() {
 
         const form = event.target;
         const formData = new FormData(form);
-        const username = formData.get("username");
+        const email = formData.get("email");
         const password = formData.get("password");
 
         const response = await fetch('http://localhost:5000/login', {
@@ -21,7 +21,7 @@ function Login() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ email, password }),
         });
 
         const data = await response.json();
@@ -44,8 +44,8 @@ function Login() {
             <div className='item2-login'>
                 {message && <div className={`feedback ${isError ? 'error' : ''}`}>{message}</div>}
                 <form onSubmit={handleSubmit} className='formulario'>
-                    <label id='name' htmlFor="name">Nome de Usuário: </label>
-                    <input type="text" name="username" placeholder='Insira seu usuario' required />
+                    <label id='name' htmlFor="name">Email: </label>
+                    <input type="text" name="email" placeholder='Insira seu email' required />
                     <label id='senha' htmlFor="password">Senha: </label>
                     <input id='password' name="password" type="password" placeholder='Insira sua senha' required />
                     <button type="submit">LOGIN</button>

@@ -12,7 +12,8 @@ function Cadastro() {
 
         const form = event.target;
         const formData = new FormData(form);
-        const username = formData.get("username");
+        const nomeCompleto = formData.get("nomeCompleto");
+        const cpf = formData.get("cpf");
         const email = formData.get("email");
         const password = formData.get("password");
         const funcao = formData.get("funcao");
@@ -22,7 +23,7 @@ function Cadastro() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, email, password, funcao }),
+            body: JSON.stringify({ nomeCompleto, cpf, email, password, funcao }),
         });
 
         const data = await response.json();
@@ -45,8 +46,10 @@ function Cadastro() {
             <div className='item2_cadastro'>
             {message && <div className={`feedback ${isError ? 'error' : ''}`}>{message}</div>}
                 <form onSubmit={handleSubmit} className='formulario'>
-                    <label htmlFor="name" id='user'>Nome de Usuário: </label>
-                    <input type="text" name="username" placeholder='Insira seu usuario' required />
+                    <label htmlFor="name" id='user'>Nome Completo: </label>
+                    <input type="text" name="nomeCompleto" placeholder='Insira seu nome completo' required />
+                    <label htmlFor="cpf" id='user'>CPF: </label>
+                    <input type="text" name="cpf" placeholder='Insira seu cpf' required />
                     <label id='mail' htmlFor="email">Email: </label>
                     <input type="email" name="email" placeholder='Insira seu email' required />
                     <label id='senha' htmlFor="password">Senha: </label>
