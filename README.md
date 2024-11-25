@@ -24,7 +24,7 @@ Feito isso, é hora de instalar as dependências.
 * Dentro do terminal, certifique-se de que você se encontra na pasta raiz do backend
 * Confirmando de que está no diretório correto, escreva o seguinte comando e pressione Enter:
 
-* `pip -r install requiremtents.txt`
+* `pip install -r requiremtents.txt`
 * Após todas as bibliotecas instaladas, rode o seguinte comando:
 * `python run.py`
 * Tudo certo, você verá que o backend já está rodando no localhost, porta 5000
@@ -36,4 +36,5 @@ Para iniciar o frontend, é necessário realizara a seguinte tarefa:
 * Abrir terminal
 * Dentro do terminal observe a pasta em que o mesmo se encontra e localize o caminho para o diretório frontend
 * Digite o comando 'cd frontend' no terminal para acessar o diretório
-* Por fim, com o terminal no diretório frontend, digite o comando 'npm run dev' 
+* Com o terminal no diretório frontend, digite o comando `npm install` para instalar as dependências necessárias
+* Por fim, digite o comando `npm run dev` para inicial o frontend
