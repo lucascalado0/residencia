@@ -20,4 +20,8 @@ def create_app():
     app.register_blueprint(analysis.routes)
     app.register_blueprint(login_cadastro)
 
+    @app.route('/') 
+    def home(): 
+        return "Bem-vindo à Página Inicial do Flask!"    
+
     return app
