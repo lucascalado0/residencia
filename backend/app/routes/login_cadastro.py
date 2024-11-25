@@ -1,82 +1,55 @@
-import os
 import re
-import uuid
 from flask import Blueprint, jsonify, request
-from pymongo import MongoClient
 from dotenv import load_dotenv
+from app.models.usuarios import Usuario
 from app import bcrypt
+import uuid
 
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
 
-usuario_teste = {"username": "primeiro@org.com", "password": "123456"}
-
-# Configurar MongoDB
-client = MongoClient(os.getenv("MONGO_URI"))
-db = client['thehive']
-
 login_cadastro = Blueprint('login_cadastro', __name__)
 
 def is_valid_email(email):
-    # Regex para validar o formato do email 
-    regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$' 
+    regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(regex, email) is not None
 
 @login_cadastro.route('/cadastro', methods=['POST'])
 def cadastro():
     data = request.get_json()
-    username = data.get('username')
+    nome_completo = data.get('nomeCompleto')
+    cpf = data.get('cpf')
+    chave_passe = uuid.uuid4().hex
     email = data.get('email')
-    password = data.get('password')
-    funcao = data.get('funcao')
+    senha = data.get('password')
+    cargo = data.get('funcao')
 
-    # Verifica se o email é válido 
-    if not is_valid_email(email): 
-        return jsonify({"status": "error", "message": "Email inválido"}), 400 
-    
-    # Verifica se a senha tem no mínimo 6 caracteres 
-    if len(password) < 6: 
-        return jsonify({"status": "error", "message": "A senha deve ter no mínimo 6 caracteres"}), 400 
-    
-    # Verifica se o usuário já existe
-    if db.usuarios.find_one({"username": username}):
+    if not is_valid_email(email):
+        return jsonify({"status": "error", "message": "Email inválido"}), 400
+
+    if len(senha) < 6:
+        return jsonify({"status": "error", "message": "A senha deve ter no mínimo 6 caracteres"}), 400
+
+    if Usuario.find_by_email(email):
         return jsonify({"status": "error", "message": "Usuário já existe"}), 400
 
-    # Criptografar a senha
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-
-    # Inserir o novo usuário no banco de dados
-    db.usuarios.insert_one({
-        "username": username,
-        "email": email,
-        "password": hashed_password,
-        "funcao": funcao
-    })
+    hashed_senha = bcrypt.generate_password_hash(senha).decode('utf-8')
+    usuario = Usuario(nome_completo, cpf, chave_passe, email, hashed_senha, cargo)
+    usuario.save()
 
     return jsonify({"status": "success", "message": "Usuário cadastrado com sucesso"}), 201
 
 @login_cadastro.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
+    email = data.get('email')
+    senha = data.get('password')
 
-    # Buscar o usuário no banco de dados
-    user = db.usuarios.find_one({"username": username})
-    print(user)
-    """
-    if username == usuario_teste["username"]:
-        if password == usuario_teste["password"]:
-            return jsonify({"status": "success", "message": "Sucesso! Usuário logado.", "object": usuario_teste}), 200            
-        else:
-            return jsonify({"status": "error", "message": "Nome de usuário ou senha incorretos"}), 401
-    return jsonify({"status": "error", "message": "Nome de usuário ou senhaaa incorretos"}), 401
-    """
+    usuario = Usuario.find_by_email(email)
+    print(senha)
 
-    # Verifica se o usuário existe e a senha está correta
-    if user and bcrypt.check_password_hash(user['password'], password):
+    if usuario and bcrypt.check_password_hash(usuario.senha, senha):
+        Usuario.update_last_login(email)
         return jsonify({"status": "success", "message": "Login realizado com sucesso"}), 200
     else:
-        return jsonify({"status": "error", "message": "Nome de usuário ou senha incorretos"}), 401
-    
-
+        return jsonify({"status": "error", "message": "Email ou senha incorretos"}), 401
