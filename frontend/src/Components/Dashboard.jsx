@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 import { FaFilter, FaRedo, FaTh, FaRegCopy, FaUser } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const Dashboard = () => {
-  
+  const [incidentes, setIncidentes] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/incidentes')
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          setIncidentes(data.incidentes);
+        }
+      })
+      .catch(error => console.error('Erro ao buscar incidentes:', error));
+  }, []);
+
   const combinedData = [
     { name: '', "Análise": 40 },
     { name: '', "Em espera": 93 },
@@ -17,7 +29,7 @@ const Dashboard = () => {
       <div className="item1-dashboard">
         <FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} />
         <FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} />
-        <FaUser size={60} style={{ margin: '40px 0', color: 'white' }} />
+        <a href="relatorios" className="bloco-link"><FaUser size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
       </div>
       <div className="item2-dashboard">
         <h1 className='h1-dashboard'>DASHBOARD</h1>
@@ -35,7 +47,7 @@ const Dashboard = () => {
           <div className="bloco bloco-azul">
             <span className="bloco-nome">Incidentes em análise</span>
             <span className="bloco-numero">40</span>
-            <a href="#" className="bloco-link">VEJA MAIS</a>
+            <a href="Dashboard2" className="bloco-link">VEJA MAIS</a>
           </div>
           <div className="bloco bloco-verde">
             <span className="bloco-nome">Incidentes concluídos</span>
@@ -77,71 +89,23 @@ const Dashboard = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-
           <div className="tabela-container">
             <table className="tabela-dashboard">
               <thead>
-                <tr>
-                  <td>[tipo do incidente]</td>
-                  <td>[status]</td>
-                  <td>[data do incidente]</td>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
+                <tr className="tabela-header">
+                  <th>Tipo do Incidente</th>
+                  <th>Status</th>
+                  <th>Data do Incidente</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
+                {incidentes.map((incidente) => (
+                  <tr key={incidente.titulo}>
+                    <td>{incidente.tipo_incidente}</td>
+                    <td>{incidente.estado}</td>
+                    <td>{new Date(incidente.data_criacao).toLocaleDateString()}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

@@ -45,4 +45,5 @@ def get_incidente():
 @routes.route('/incidentes', methods=['GET'])
 def get_all_incidentes():
     incidentes = Incidente.find_all()
-    return jsonify({"status": "success", "incidentes": [incidente.to_dict() for incidente in incidentes]}), 200
+    incidentes_dict = [incidente.to_dict() for incidente in incidentes]
+    return jsonify({"status": "success", "incidentes": incidentes_dict}), 200

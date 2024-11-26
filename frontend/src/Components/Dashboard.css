@@ -31,12 +31,12 @@
 }
 
 .h1-dashboard {
-    color: #000000;
-    font-size: 32px;
-    margin-bottom: 10px;
-    position: absolute;
-    top: 10px;
-    left: 130px;
+  color: #000000;
+  font-size: 32px;
+  margin-bottom: 10px;
+  position: absolute;
+  top: 10px;
+  left: 130px;
 }
 
 .h2-dashboard {
@@ -106,7 +106,6 @@
   text-decoration: underline;
 }
 
-
 .bloco-verde {
   border-color: #28a745;
   background-color: #eafbea;
@@ -135,9 +134,9 @@
   background-color: #01184A;
   display: flex;
   flex-direction: column;
-  align-items: center;   
+  align-items: center;
   justify-content: flex-start;
-  padding-top: 20px;     
+  padding-top: 20px;
 }
 
 .item2-dashboard {
@@ -156,7 +155,7 @@
   font-size: 20px;
   color: #01184A;
 }
-  
+
 .dashboard-section {
   display: flex;
   width: 100%;
@@ -225,10 +224,22 @@
 }
 
 .tabela-dashboard td {
-  background-color: #F8F8F8;
-  color: black;
-  font-weight: bold;
   padding: 20px 15px;
   text-align: center;
   height: 10px;
+}
+
+.tabela-dashboard tr:nth-child(even) {
+  background-color: #01184A;
+  color: white;
+}
+
+.tabela-dashboard tr:nth-child(odd) {
+  background-color: #F8F8F8;
+  color: black;
+}
+
+.tabela-header {
+  background-color: #01184A;
+  color: white;
 }
