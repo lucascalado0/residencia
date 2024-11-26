@@ -6,9 +6,9 @@ const DetecIncidentes = () => {
   return (
     <div className="container">
       <div className="item1-detec">
-        <FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} />
-        <FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} />
-        <FaUser size={60} style={{ margin: '40px 0', color: 'white' }} />
+      <a href="dashboard" className="bloco-link"><FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} /></a>
+        <a href="relatorios" className="bloco-link"><FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
+        <a href="admin" className="bloco-link"><FaUser size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
       </div>
       <div className='item2-detec'>
         <h1 className='h1-detec'>Detecção de Incidentes</h1>
@@ -55,7 +55,7 @@ const DetecIncidentes = () => {
               <td>2024-11-18</td>
               <td>Phishing</td>
               <td><span className="status alerta">Alerta</span></td>
-              <td><button className="acao-btn-detec">Ver Detalhes</button></td>
+              <td><a href="detail_incidentes" className="bloco-link"><button className="acao-btn-detec">Ver Detalhes</button></a></td>
             </tr>
             <tr>
               <td>2024-11-17</td>

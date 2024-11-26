@@ -6,9 +6,9 @@ const DetailIncidentes = () => {
   return (
     <div className="container">
       <div className="item1-detail">
-        <FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} />
-        <FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} />
-        <FaUser size={60} style={{ margin: '40px 0', color: 'white' }} />
+        <a href="dashboard" className="bloco-link"><FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} /></a>
+        <a href="relatorios" className="bloco-link"><FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
+        <a href="admin" className="bloco-link"><FaUser size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
       </div>
       <div className="item2-detail">
         <h1 className='h1-detail'>Detalhes do Incidente</h1>
@@ -35,10 +35,10 @@ const DetailIncidentes = () => {
         <table className="tabela-detail">
           <thead>
             <tr>
-              <td>[data da ação]</td>
-              <td>[responsável]</td>
-              <td>[ação]</td>
-              <td>[ações]</td>
+              <td>Data da ação</td>
+              <td>Responsável</td>
+              <td>Ação</td>
+              <td>Ações</td>
             </tr>
             <tr>
               <th></th>

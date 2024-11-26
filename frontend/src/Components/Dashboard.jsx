@@ -27,9 +27,9 @@ const Dashboard = () => {
   return (
     <div className="container">
       <div className="item1-dashboard">
-        <FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} />
-        <FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} />
-        <a href="relatorios" className="bloco-link"><FaUser size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
+      <a href="dashboard" className="bloco-link"><FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} /></a>
+        <a href="relatorios" className="bloco-link"><FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
+        <a href="admin" className="bloco-link"><FaUser size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
       </div>
       <div className="item2-dashboard">
         <h1 className='h1-dashboard'>DASHBOARD</h1>
@@ -52,7 +52,7 @@ const Dashboard = () => {
           <div className="bloco bloco-verde">
             <span className="bloco-nome">Incidentes concluídos</span>
             <span className="bloco-numero">93</span>
-            <a href="#" className="bloco-link">VEJA MAIS</a>
+            <a href="detec_incidentes" className="bloco-link">VEJA MAIS</a>
           </div>
           <div className="bloco bloco-laranja">
             <span className="bloco-nome">Incidentes em espera</span>
