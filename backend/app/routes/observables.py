@@ -33,7 +33,7 @@ def create_observable():
     responses = []
     for input_observable in observables:
         response = hive.alert.create_observable(alert_id=alert_id, observable=input_observable)
-        responses.append(response.json())
+        responses.append(response)
     return jsonify({"status": "success", "observables": responses})
 
 @routes.route('/update_observable', methods=['PUT'])
@@ -48,8 +48,8 @@ def update_observable():
 
     response = hive.observable.update(observable_id, updated_observable)
 
-    if response.status_code == 200:
-        return jsonify({"status": "success", "observable_id": response.json()["_id"]}), 200
+    if response:
+        return jsonify({"status": "success", "observable_id": response["_id"]}), 200
     else:
-        return jsonify({"status": "error", "message": response.json()}), response.status_code
+        return jsonify({"status": "error", "message": response}), 500
 

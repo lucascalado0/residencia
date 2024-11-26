@@ -38,10 +38,10 @@ def create_task():
 
     response = hive.case.create_task(case_id, new_task)
 
-    if response.status_code == 201:
-        return jsonify({"status": "success", "task_id": response.json()["_id"]}), 201
+    if response:
+        return jsonify({"status": "success", "task_id": response["_id"]}), 201
     else:
-        return jsonify({"status": "error", "message": response.json()}), response.status_code
+        return jsonify({"status": "error", "message": response}), 500
 
 @routes.route('/update_task', methods=['PUT'])
 def update_task():
@@ -54,10 +54,10 @@ def update_task():
 
     response = hive.task.update(task_id, updated_task)
 
-    if response.status_code == 200:
-        return jsonify({"status": "success", "task_id": response.json()["_id"]}), 200
+    if response:
+        return jsonify({"status": "success", "task_id": response["_id"]}), 200
     else:
-        return jsonify({"status": "error", "message": response.json()}), response.status_code
+        return jsonify({"status": "error", "message": response}), 500
 
 @routes.route('/tasks', methods=['GET'])
 def get_tasks():
@@ -66,7 +66,7 @@ def get_tasks():
 
     tasks = hive.task.find()
 
-    if isinstance(tasks, list):
+    if tasks:
         return jsonify({"status": "success", "tasks": tasks}), 200
     else:
         return jsonify({"status": "error", "message": "Erro ao buscar tarefas"}), 500
@@ -89,7 +89,7 @@ def update_task_status():
 
     response = hive.task.update(task_id, updated_task)
 
-    if response.status_code == 200:
-        return jsonify({"status": "success", "task_id": response.json()["_id"]}), 200
+    if response:
+        return jsonify({"status": "success", "task_id": response["_id"]}), 200
     else:
-        return jsonify({"status": "error", "message": response.json()}), response.status_code
+        return jsonify({"status": "error", "message": response}), 500

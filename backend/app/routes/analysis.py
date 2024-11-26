@@ -34,10 +34,10 @@ def analyze_observable():
 
     try:
         response = hive.analyzer.run(analyzer="MISP_2_1", observable_data=observable, tlp=2)
-        if response.status_code == 200:
-            return jsonify({"status": "success", "analysis": response.json()}), 200
+        if response:
+            return jsonify({"status": "success", "analysis": response}), 200
         else:
-            return jsonify({"status": "error", "message": response.json()}), response.status_code
+            return jsonify({"status": "error", "message": response}), 500
     except Exception as e:
         print(f"Erro ao analisar o observable: {e}")
         return jsonify({"status": "error", "message": "Erro ao analisar o observable"}), 500

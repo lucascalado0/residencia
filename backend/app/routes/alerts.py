@@ -44,10 +44,10 @@ def create_alert():
 
     output_alert = hive.alert.create(input_alert)
 
-    if output_alert.status_code == 201:
-        return jsonify({"status": "success", "alert_id": output_alert.json()["_id"]}), 201
+    if output_alert:
+        return jsonify({"status": "success", "alert_id": output_alert["_id"]}), 201
     else:
-        return jsonify({"status": "error", "message": output_alert.json()}), output_alert.status_code
+        return jsonify({"status": "error", "message": output_alert}), 500
 
 @routes.route('/update_alert', methods=['PUT'])
 def update_alert():
@@ -60,10 +60,10 @@ def update_alert():
 
     response = hive.alert.update(alert_id, updated_alert)
 
-    if response.status_code == 200:
-        return jsonify({"status": "success", "alert_id": response.json()["_id"]}), 200
+    if response:
+        return jsonify({"status": "success", "alert_id": response["_id"]}), 200
     else:
-        return jsonify({"status": "error", "message": response.json()}), response.status_code
+        return jsonify({"status": "error", "message": response}), 500
 
 def get_observables_of_alert(alert_id):
     response = hive.alert.find_observables(alert_id)
@@ -86,7 +86,7 @@ def get_alerts():
 
     alerts = hive.alert.find()
 
-    if isinstance(alerts, list):
+    if alerts:
         for alert in alerts:
             alert_id = alert["_id"]
             observables = get_observables_of_alert(alert_id)

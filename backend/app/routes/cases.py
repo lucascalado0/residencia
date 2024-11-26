@@ -40,10 +40,10 @@ def create_case():
 
     response = hive.case.create(new_case)
 
-    if response.status_code == 201:
-        return jsonify({"status": "success", "case_id": response.json()["_id"]}), 201
+    if response:
+        return jsonify({"status": "success", "case_id": response["_id"]}), 201
     else:
-        return jsonify({"status": "error", "message": response.json()}), response.status_code
+        return jsonify({"status": "error", "message": response}), 500
 
 @routes.route('/update_case', methods=['PUT'])
 def update_case():
@@ -56,10 +56,10 @@ def update_case():
 
     response = hive.case.update(case_id, updated_case)
 
-    if response.status_code == 200:
-        return jsonify({"status": "success", "case_id": response.json()["_id"]}), 200
+    if response:
+        return jsonify({"status": "success", "case_id": response["_id"]}), 200
     else:
-        return jsonify({"status": "error", "message": response.json()}), response.status_code
+        return jsonify({"status": "error", "message": response}), 500
 
 @routes.route('/cases', methods=['GET'])
 def get_cases():
@@ -68,7 +68,7 @@ def get_cases():
 
     cases = hive.case.find()
 
-    if isinstance(cases, list):
+    if cases:
         return jsonify({"status": "success", "cases": cases}), 200
     else:
         return jsonify({"status": "error", "message": "Erro ao buscar casos"}), 500
