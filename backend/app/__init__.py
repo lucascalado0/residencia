@@ -11,7 +11,8 @@ def create_app():
     # Inicializar o Bcrypt com o app
     bcrypt.init_app(app)
 
-    from app.routes import alerts, cases, observables, tasks, analysis, login_cadastro, incidentes, evidencias
+    from app.routes import alerts, cases, observables, tasks, analysis
+    from app.routes import login_cadastro, incidentes, evidencias, acoes_incidente
 
     app.register_blueprint(alerts.routes)
     app.register_blueprint(cases.routes)
@@ -21,6 +22,7 @@ def create_app():
     app.register_blueprint(login_cadastro)
     app.register_blueprint(incidentes.routes)
     app.register_blueprint(evidencias.routes)
+    app.register_blueprint(acoes_incidente.routes)
 
     @app.route('/') 
     def home(): 
