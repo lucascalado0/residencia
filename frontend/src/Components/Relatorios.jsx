@@ -1,14 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Relatorios.css';
 import { FaFilter, FaRedo, FaCalendarAlt, FaExclamationCircle, FaTags, FaTh, FaRegCopy, FaUser } from 'react-icons/fa';
 
 const Relatorios = () => {
+  const [incidentes, setIncidentes] = useState([]);
+  const [filtros, setFiltros] = useState({
+    data: "",
+    tipo: "",
+    status: ""
+  });
+  const [dropdowns, setDropdowns] = useState({
+    data: false,
+    tipo: false,
+    status: false
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:5000/incidentes')
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          setIncidentes(data.incidentes);
+        }
+      })
+      .catch(error => console.error('Erro ao buscar incidentes:', error));
+  }, []);
+
+  const handleFiltroChange = (tipoFiltro, valor) => {
+    setFiltros({
+      ...filtros,
+      [tipoFiltro]: valor
+    });
+    setDropdowns({
+      ...dropdowns,
+      [tipoFiltro]: false
+    });
+  };
+
+  const toggleDropdown = (tipoDropdown) => {
+    setDropdowns({
+      ...dropdowns,
+      [tipoDropdown]: !dropdowns[tipoDropdown]
+    });
+  };
+
+  const incidentesFiltrados = incidentes.filter(incidente => {
+    return (
+      (!filtros.data || new Date(incidente.data_criacao).toLocaleDateString() === filtros.data) &&
+      (!filtros.tipo || incidente.tipo_incidente === filtros.tipo) &&
+      (!filtros.status || incidente.estado === filtros.status)
+    );
+  });
+
   return (
     <div className="container">
       <div className="item1-relatorios">
-        <FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} />
-        <FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} />
-        <FaUser size={60} style={{ margin: '40px 0', color: 'white' }} />
+        <a href="dashboard" className="bloco-link"><FaTh size={60} style={{ margin: '80px 0 40px 0', color: 'white' }} /></a>
+        <a href="relatorios" className="bloco-link"><FaRegCopy size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
+        <a href="admin" className="bloco-link"><FaUser size={60} style={{ margin: '40px 0', color: 'white' }} /></a>
       </div>
       <div className="item2-relatorios">
         <h1 className='h1-relatorios'>Relatórios</h1>
@@ -22,89 +71,73 @@ const Relatorios = () => {
         </div>
         <h2 className='h2-relatorios'>Incidentes recentes</h2>
         <div className="filtros-relatorios">
-          <button className="filtro-btn-relatorios">
-            <FaCalendarAlt /> Data
-            <span className="barra-relatorios">|</span>
-            <span>&#9660;</span>
-          </button>
+          <div className={`dropdown ${dropdowns.data ? 'active' : ''}`}>
+            <button className="filtro-btn-relatorios" onClick={() => toggleDropdown('data')}>
+              <FaCalendarAlt /> Data
+              <span className="barra-relatorios">|</span>
+              <span>&#9660;</span>
+            </button>
+            {dropdowns.data && (
+              <div className="dropdown-content">
+                <a onClick={() => handleFiltroChange("data", "")}>Todos</a>
+                {[...new Set(incidentes.map(incidente => new Date(incidente.data_criacao).toLocaleDateString()))].map((date, index) => (
+                  <a key={index} onClick={() => handleFiltroChange("data", date)}>{date}</a>
+                ))}
+              </div>
+            )}
+          </div>
 
-          <button className="filtro-btn-relatorios">
-            <FaTags /> Tipo
-            <span className="barra-relatorios">|</span>
-            <span>&#9660;</span>
-          </button>
+          <div className={`dropdown ${dropdowns.tipo ? 'active' : ''}`}>
+            <button className="filtro-btn-relatorios" onClick={() => toggleDropdown('tipo')}>
+              <FaTags /> Tipo
+              <span className="barra-relatorios">|</span>
+              <span>&#9660;</span>
+            </button>
+            {dropdowns.tipo && (
+              <div className="dropdown-content">
+                <a onClick={() => handleFiltroChange("tipo", "")}>Todos</a>
+                {["DNS", "Phishing", "Malware"].map((tipo, index) => (
+                  <a key={index} onClick={() => handleFiltroChange("tipo", tipo)}>{tipo}</a>
+                ))}
+              </div>
+            )}
+          </div>
 
-          <button className="filtro-btn-relatorios">
-            <FaExclamationCircle /> Status
-            <span className="barra-relatorios">|</span>
-            <span>&#9660;</span>
-          </button>
+          <div className={`dropdown ${dropdowns.status ? 'active' : ''}`}>
+            <button className="filtro-btn-relatorios" onClick={() => toggleDropdown('status')}>
+              <FaExclamationCircle /> Status
+              <span className="barra-relatorios">|</span>
+              <span>&#9660;</span>
+            </button>
+            {dropdowns.status && (
+              <div className="dropdown-content">
+                <a onClick={() => handleFiltroChange("status", "")}>Todos</a>
+                {["Analise", "Concluido", "Em Espera", "Impedidos"].map((status, index) => (
+                  <a key={index} onClick={() => handleFiltroChange("status", status)}>{status}</a>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <table className="tabela-relatorios">
           <thead>
             <tr>
-              <td>[tipo do incidente]</td>
-              <td>[status]</td>
-              <td>[data do incidente]</td>
-              <td>[ações]</td>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th>Tipo do Incidente</th>
+              <th>Status</th>
+              <th>Data do Incidente</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
+            {incidentesFiltrados.map(incidente => (
+              <tr key={incidente.titulo}>
+                <td>{incidente.tipo_incidente}</td>
+                <td>{incidente.estado}</td>
+                <td>{new Date(incidente.data_criacao).toLocaleDateString()}</td>
+                <td><button>Ver Detalhes</button></td>
+              </tr>
+            ))}
           </tbody>
         </table>
 

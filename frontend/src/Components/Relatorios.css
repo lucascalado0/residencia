@@ -31,12 +31,12 @@
 }
 
 .h1-relatorios {
-    color: #000000;
-    font-size: 32px;
-    margin-bottom: 10px;
-    position: absolute;
-    top: 10px;
-    left: 130px;
+  color: #000000;
+  font-size: 32px;
+  margin-bottom: 10px;
+  position: absolute;
+  top: 10px;
+  left: 130px;
 }
 
 .h2-relatorios {
@@ -84,7 +84,6 @@
   margin-left: 8px;
 }
 
-
 .filtro-btn-relatorios span:last-child {
   font-size: 14px;
   margin-left: 4px;
@@ -92,6 +91,34 @@
 
 .filtro-btn-relatorios:hover {
   background-color: #002244;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
 }
 
 .item1-relatorios {
@@ -123,52 +150,63 @@
   font-size: 20px;
   color: #01184A;
 }
-  
-  .tabela-relatorios {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  .tabela-relatorios th {
-    background-color: #01184A;
-    color: white;
-    font-weight: bold;
-    padding: 20px 15px;
-    text-align: center;
-    height: 10px;
-  }
 
-  .tabela-relatorios td {
-    background-color: #F8F8F8;
-    color: black;
-    font-weight: bold;
-    padding: 20px 15px;
-    text-align: center;
-    height: 10px;
-  }
-  
-  .paginas-relatorios {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-  }
-  
-  .pagina-btn-relatorios {
-    background-color: #01184A;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    margin: 0 5px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .pagina-btn-relatorios:hover {
-    background-color: #002244;
-  }
-  
+.tabela-relatorios {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tabela-relatorios th {
+  background-color: #01184A;
+  color: white;
+  font-weight: bold;
+  padding: 20px 15px;
+  text-align: center;
+  height: 10px;
+}
+
+.tabela-relatorios td {
+  padding: 20px 15px;
+  text-align: center;
+  height: 10px;
+}
+
+.tabela-relatorios tr:nth-child(even) {
+  background-color: #01184A;
+  color: white;
+}
+
+.tabela-relatorios tr:nth-child(odd) {
+  background-color: #F8F8F8;
+  color: black;
+}
+
+.tabela-header {
+  background-color: #01184A;
+  color: white;
+}
+
+.paginas-relatorios {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.pagina-btn-relatorios {
+  background-color: #01184A;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  margin: 0 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagina-btn-relatorios:hover {
+  background-color: #002244;
+}
